@@ -14,7 +14,14 @@
       (string-join "")
       ))
 
-(define number->list (compose string->list number->string))
+(define (number->list dividend [divisor 10] [acc null])
+  (if (zero? dividend)
+      acc
+      (let ([rem (remainder dividend divisor)])
+        (number->list
+         (- dividend rem)
+         (* 10 divisor)
+         (cons (/ rem (/ divisor 10)) acc)))))
 
 (define (numeralize n pos)
   (let ([chars (chars-for-position pos)])
@@ -27,14 +34,14 @@
   [(3) (hash 'one #\M)])
 
 (define/match (roman-repr n)
-  [(#\0) null]
-  [(#\1) '(one)]
-  [(#\2) '(one one)]
-  [(#\3) '(one one one)]
-  [(#\4) '(one five)]
-  [(#\5) '(five)]
-  [(#\6) '(five one)]
-  [(#\7) '(five one one)]
-  [(#\8) '(five one one one)]
-  [(#\9) '(one ten)]
+  [(0) null]
+  [(1) '(one)]
+  [(2) '(one one)]
+  [(3) '(one one one)]
+  [(4) '(one five)]
+  [(5) '(five)]
+  [(6) '(five one)]
+  [(7) '(five one one)]
+  [(8) '(five one one one)]
+  [(9) '(one ten)]
   )
