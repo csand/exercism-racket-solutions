@@ -14,14 +14,17 @@
       (string-join "")
       ))
 
-(define (number->list dividend [divisor 10] [acc null])
-  (if (zero? dividend)
-      acc
-      (let ([rem (remainder dividend divisor)])
-        (number->list
-         (- dividend rem)
-         (* 10 divisor)
-         (cons (/ rem (/ divisor 10)) acc)))))
+(define (number->list n)
+  (define (digit-list dividend [divisor 10] [acc null])
+    (if (zero? dividend)
+        acc
+        (let ([rem (remainder dividend divisor)])
+          (digit-list
+           (- dividend rem)
+           (* 10 divisor)
+           (cons (/ rem (/ divisor 10)) acc)))))
+  (digit-list n)
+  )
 
 (define (numeralize n pos)
   (let ([chars (chars-for-position pos)])
